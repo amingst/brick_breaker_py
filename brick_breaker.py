@@ -28,14 +28,16 @@ def main():
     # Create lists for the game sprites
     entities_list = pygame.sprite.Group()
     brick_list = pygame.sprite.Group()
+    ball_list = pygame.sprite.Group()
 
     # Instantiate the paddle and add to entities_list
     paddle = Paddle()
     entities_list.add(paddle)
 
-    # Instantiate the ball and add to entities_list
+    # Instantiate the ball and add to entities_list and ball_list
     ball = Ball()
     entities_list.add(ball)
+    ball_list.add(ball)
 
     # Define the brick starting position and number of bricks
     brick_start_pos = 80
@@ -68,12 +70,21 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
         
+        # Update while failure state is not met
         if not is_game_over:
             paddle.update()
             is_game_over = ball.update()
         
+        # Handle a failure state
         if is_game_over:
             sys.exit()
+
+        # Handle collisions between the ball and paddle
+        if pygame.sprite.spritecollide(paddle, ball_list, False):
+            new_direction = (paddle.rect.x + paddle.paddle_width / 2) - (ball.rect.x + ball.ball_width / 2)
+
+            ball.rect.y = screen.get_height() - paddle.rect.height - ball.rect.height - 1
+            ball.bounce(new_direction)
         
         # Draw sprites to the screen
         entities_list.draw(screen)

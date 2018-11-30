@@ -3,6 +3,7 @@ import pygame
 
 from brick import Brick
 from paddle import Paddle
+from ball import Ball
 
 def create_window(window_width, window_height, window_caption):
     """ Method that initializes a pygame window
@@ -31,6 +32,10 @@ def main():
     # Instantiate the paddle and add to entities_list
     paddle = Paddle()
     entities_list.add(paddle)
+
+    # Instantiate the ball and add to entities_list
+    ball = Ball()
+    entities_list.add(ball)
 
     # Define the brick starting position and number of bricks
     brick_start_pos = 80

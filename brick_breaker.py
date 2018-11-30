@@ -85,6 +85,15 @@ def main():
 
             ball.rect.y = screen.get_height() - paddle.rect.height - ball.rect.height - 1
             ball.bounce(new_direction)
+
+        # Handle brick collisions
+        broken_bricks = pygame.sprite.spritecollide(ball, brick_list, True)
+
+        if len(broken_bricks) > 0:
+            ball.bounce(0)
+
+            if len(brick_list) == 0:
+                is_game_over = True
         
         # Draw sprites to the screen
         entities_list.draw(screen)

@@ -41,6 +41,9 @@ def main():
     brick_start_pos = 80
     num_bricks = 32
 
+    # Game flags
+    is_game_over = False
+
     # Build the brick matrix
     for x in range(5):
         for y in range(0, num_bricks):
@@ -65,7 +68,12 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
         
-        paddle.update()
+        if not is_game_over:
+            paddle.update()
+            is_game_over = ball.update()
+        
+        if is_game_over:
+            sys.exit()
         
         # Draw sprites to the screen
         entities_list.draw(screen)

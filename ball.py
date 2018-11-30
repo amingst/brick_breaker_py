@@ -1,3 +1,4 @@
+import math
 import pygame
 
 class Ball(pygame.sprite.Sprite):
@@ -24,3 +25,41 @@ class Ball(pygame.sprite.Sprite):
         # Grab the screen dimensions
         self.screen_height = pygame.display.get_surface().get_height()
         self.screen_width = pygame.display.get_surface().get_width()
+
+    def bounce(self, new_direction):
+        """ The bounce method that handles what to do when a collision is detected. """
+        self.ball_direction_degrees = (180 - self.ball_direction_degrees) % 360
+        self.ball_direction_degrees -= new_direction
+    
+    def update(self):
+        """ Update method for the ball class. Updates the ball's position on the screen. """
+        
+        # Convert the ball's direction to radians
+        ball_direction_radians = math.radians(self.ball_direction_degrees)
+
+        # Update the ball's position
+        self.x_pos += self.velocity * math.sin(ball_direction_radians)
+        self.y_pos -= self.velocity * math.cos(ball_direction_radians)
+
+        # Update the sprite location
+        self.rect.x = self.x_pos
+        self.rect.y = self.y_pos
+
+        # Handle collisions with walls
+        if self.y_pos <= 0:
+            self.bounce(0)
+            self.y_pos = 1
+        
+        if self.x_pos <= 0:
+            self.ball_direction_degrees = (360 - self.ball_direction_degrees) % 360
+            self.x_pos = 1
+        
+        if self.x_pos > self.screen_width - self.ball_width:
+            self.ball_direction_degrees = (360 - self.ball_direction_degrees) % 360
+            self.x_pos = self.screen_width - self.ball_width - 1
+        
+        # Check if the ball fell off the bottom of the screen
+        if self.y_pos > 600:
+            return True
+        else:
+            return False

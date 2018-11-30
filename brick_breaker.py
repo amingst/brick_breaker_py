@@ -60,6 +60,8 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
         
+        paddle.update()
+        
         # Draw sprites to the screen
         entities_list.draw(screen)
         

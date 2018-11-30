@@ -23,4 +23,18 @@ class Paddle(pygame.sprite.Sprite):
         # Set the position of the paddle
         self.rect.x = 0
         self.rect.y = self.screen_height - self.paddle_height
+    
+    def update(self):
+        """ The update method for the paddle class which handles movement """
+        # Grab the mouse position on the screen
+        mouse_pos = pygame.mouse.get_pos()
+
+        # Set the position of the paddle to the mouse
+        self.rect.x = mouse_pos[0]
+
+        # Set screen bounds
+        if self.rect.x > self.screen_width - self.paddle_width:
+            self.rect.x = self.screen_width - self.paddle_width
+
+
 

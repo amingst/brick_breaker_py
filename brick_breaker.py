@@ -40,8 +40,16 @@ def main():
         brick_start_pos += 15 + 2
 
 
+    fps_clock = pygame.time.Clock()
+
     # Start the main game loop
     while True:
+        # Set the framerate
+        fps_clock.tick(60)
+
+        # Clear the screen
+        screen.fill((0, 0, 0))
+
         # Watch for event to quit the game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
